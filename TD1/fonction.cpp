@@ -45,11 +45,11 @@ void exercice_surcharge() {
     fct(x); //appel 2
     fct(i, y); //appel 3
     fct(x, j); //appel 4
-    fct(c); //appel 5
-    fct(i, j); //appel 6
-    fct(i, c); //appel 7
-    fct(i, z); //appel 8
-    fct(z, z); //appel 9
+//    fct(c); //appel 5
+//    fct(i, j); //appel 6
+  //  fct(i, c); //appel 7
+    //fct(i, z); //appel 8
+    //fct(z, z); //appel 9
 
 }
 
