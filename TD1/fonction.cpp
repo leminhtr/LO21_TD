@@ -31,11 +31,6 @@ void exerciceA(){//aire d'un cercle
     cout << "a un perimetre de %f " << p << "et une surface de " << s;
 }
 
-
-inline int fct(int x){ std::cout<<"1:"<<x<<"\n"; return 0; }
-inline int fct(float y){ std::cout<<"2:"<<y<<"\n"; return 0; }
-inline int fct(int x, float y){ std::cout<<"3:"<<x<<y<<"\n"; return 0; }
-inline float fct(float x, int y){ std::cout<<"4:"<<x<<y<<"\n"; return 3.14; }
 void exercice_surcharge() {
     int i = 3, j = 15;
     float x = 3.14159, y = 1.414;
@@ -46,10 +41,16 @@ void exercice_surcharge() {
     fct(i, y); //appel 3
     fct(x, j); //appel 4
 //    fct(c); //appel 5
-//    fct(i, j); //appel 6
-  //  fct(i, c); //appel 7
-    //fct(i, z); //appel 8
-    //fct(z, z); //appel 9
+    fct(i, (float)j); //appel 6
+    fct(static_cast<float>(i),j);//appel 6
+
+    fct((float)i, c); //appel 7
+    fct(static_cast<float>(i),c);//appel 7
+
+    fct(i, z); //appel 8
+
+    fct((int)z, z); //appel 9
+    fct(z, static_cast<int>(z));//appel9
 
 }
 

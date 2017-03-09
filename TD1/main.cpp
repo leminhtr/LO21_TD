@@ -1,6 +1,6 @@
 #include <iostream>
 #include "fonction.h"
-
+#include "ex10.h"
 
 using namespace std;
 
