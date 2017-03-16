@@ -172,3 +172,53 @@ void essai_alloc(){
 }
 
 //------------------------ Exercice 17 ---------------------------
+void raz17(personne *p){
+    p->age=0;
+    //p->nom="";  Erreur et = adresse du 1er élément du tableau de char.
+    *p->nom='\0';   // <=> (p->nom)[0]='\0';
+}
+
+void affiche_struct(const personne * p){
+    cout << "La personne s'appelle : " << p->nom << " et a " << p->age << " ans." << endl;
+}
+
+void affiche_tab(const personne *tab_pers, int nb_pers ){   //tab_pers est l'adresse du 1er élément du tableau de personne
+    for(int i=0; i< nb_pers, i++)
+    {
+        affiche_struct(tab_pers);
+        tab_pers++; //élément suivant du tableau <=> adresse pointée incrémente
+    }
+
+
+}
+
+void init_struct(personne *pers, const unsigned int n, const char *name){
+    pers ->age=n;
+    char *pt=pers->nom; //Pointeur vers emplacement mémoire du 1er caractère du nom
+    *pers ->nom=;
+
+    while(*name){   //0 <=> '\0' => tant que *name != 0
+        *pt=*name;
+        ++pt;
+        ++name;
+    }
+
+    *pt='\0';
+}
+
+void copy_struct(const personne *source, personne *dest){
+    *dest=*source; // Possible d'initialiser une structure avec une autre structure : Copie champ par champ
+}
+
+void copy_tab(const personne *tab_pers_source, personne *tab_pers_dest, const int n){
+    for(int i=0; i<n; i++){
+        tab_pers_dest[i]=tab_pers_source[i];    // <=> *(source+i)
+    }
+}
+
+
+
+
+
+
+

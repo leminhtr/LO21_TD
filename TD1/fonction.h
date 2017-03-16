@@ -99,10 +99,12 @@ struct personne {
     unsigned int age;
 };
 
-
-
-
-
+void raz17(personne *p);
+void affiche_struct(const personne * p);
+void affiche_tab(const personne *tab_pers, int nb_pers );
+void init_struct(personne *pers, const unsigned int n, const char *name);
+void copy_struct(const personne *source, personne *dest);
+void copy_tab(const personne *tab_pers_source, personne *tab_pers_dest, const int n)
 
 
 
