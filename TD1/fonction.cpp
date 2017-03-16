@@ -183,7 +183,7 @@ void affiche_struct(const personne * p){
 }
 
 void affiche_tab(const personne *tab_pers, int nb_pers ){   //tab_pers est l'adresse du 1er élément du tableau de personne
-    for(int i=0; i< nb_pers, i++)
+    for(int i=0; i< nb_pers; i++)
     {
         affiche_struct(tab_pers);
         tab_pers++; //élément suivant du tableau <=> adresse pointée incrémente
@@ -195,7 +195,6 @@ void affiche_tab(const personne *tab_pers, int nb_pers ){   //tab_pers est l'adr
 void init_struct(personne *pers, const unsigned int n, const char *name){
     pers ->age=n;
     char *pt=pers->nom; //Pointeur vers emplacement mémoire du 1er caractère du nom
-    *pers ->nom=;
 
     while(*name){   //0 <=> '\0' => tant que *name != 0
         *pt=*name;
