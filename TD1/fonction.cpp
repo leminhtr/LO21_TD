@@ -55,7 +55,120 @@ void exercice_surcharge() {
 }
 
 
+// ----------------------- Exercice 12 --------------------------
+
+void inverse (int *a, int *b){
+    cout << "a=" << *a << ", b="<< *b << endl;
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+    cout << "a=" << *a << ", b="<< *b << endl;
+}
+
+void inverse(int &a, int &b){
+    cout << "a=" << a << ", b="<< b << endl;
+    int temp=a;
+    a=b;
+    b=temp;
+    cout << "a=" << a << ", b="<< b << endl;
+
+}
+
+// ----------------------- Exercice 13 --------------------------
+
+mystruct raz (mystruct *var){
+    cout << "n=" << var->n << ", x="<< var->x << endl;
+    var->n=0;   // <=> (*var).n=0;
+    var->x=0;   // <=> (*var).x=0;
+    cout << "n=" << var->n << ", x="<< var->x << endl;
+}
+
+mystruct raz(mystruct &var){
+    cout << "n=" << var.n << ", x="<< var.x << endl;
+    var.n=0;
+    var.x=0;
+    cout << "n=" << var.n << ", x="<< var.x << endl;
+}
+
+//------------------------ Exercice 14 ---------------------------
+
+//void truc1(const int& x){
+//    std::cout<<x<<"\n";
+//    x++;    // Erreur : x est const int => non modifiable
+//    std::cout<<x<<"\n";
+//}
+//
+//void truc2(int& x){
+//    x++;
+//    truc1(x);
+//    x++;
+//}
+//void truc3(const int& x){
+//    truc2(x);   // erreur : truc2 peut modifier la valuer de x qui est const int donc non modifiable
+//                // Correction : On peut appeler truc1(x)
+//    double y=x; // Conversion implicite entre valeur ok
+//    double& z=x;    //erreur : lvalue de type int. Expected : lvalue type double
+//                    // Mais const &z=x; OK
+//    double& u=y;    // Ok passage référence double avec double
+//    double& t=y-3;  // Erreur : y-3 n'est pas une lvalue : y-3 n'est pas stockée durablement en mémoire => Erreur passage référence rvalue
+//}                   // const double &t =y-3; OK passage référence const lvalue
 
 
 
+//------------------------ Exercice 15 ---------------------------
 
+void init(point* pt, int _x, int _y, int _z) {
+    pt->x=_x; pt->y=_y; pt->z=_z;
+}
+//// Les 3 fonctions suivantes sont redondantes à la première
+//void init(point* pt, int _x, int _y) {
+//    pt->x=_x; pt->y=_y; pt->z=0;
+//}
+//void init(point* pt, int _x) {
+//    pt->x=_x; pt->y=0; pt->z=0;
+//}
+//void init(point* pt) {
+//    pt->x=0; pt->y=0; pt->z=0;
+//}
+void essai_init() {
+    point p;
+    init(&p);
+    init(&p,1);
+    init(&p,1,2);
+    init(&p,1,2,3);
+}
+
+
+//------------------------ Exercice 16 ---------------------------
+/*
+ *  Rappel : Allocation dynamique
+ *
+ *      En C : T *p=(T*)malloc(sizeof(T));
+ *              T *pArray=(T*)malloc(taille*sizeof(T));
+ *
+ *      T *p= new T; : 1) Alloue un espace mémoire de type T
+ *                      2) Fais pointer p sur l'espace mémoire alloué
+ *      T *pArray= new T[taille];
+ *
+ *      Libération mémoire :
+ *
+ *          delete et delete[];
+ *              delete p;   // en C : free(p);
+ *              delete[] pArray;    // en C : free(pArray);
+ *
+ */
+
+
+void essai_alloc(){
+    //pt_int=(int*)malloc(sizeof(int));
+    int *pt_int= new int;
+    //pt_double=(double*)malloc(sizeof(double)*100);
+    double *pt_double= new double[100];
+
+    //free(pt_int);
+    delete pt_int;
+    //free(pt_double);
+    delete[]pt_double;
+}
+
+//------------------------ Exercice 17 ---------------------------

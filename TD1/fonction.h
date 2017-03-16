@@ -21,6 +21,114 @@ inline int fct(int x, float y){ std::cout<<"3:"<<x<<y<<"\n"; return 0; }
 inline float fct(float x, int y){ std::cout<<"4:"<<x<<y<<"\n"; return 3.14; }
 void exercice_surcharge();
 
+void inverse(int *a, int *b);
+void inverse(int &a, int &b);
+
+
+//------------------- Exercice 13 --------------------
+struct mystruct {
+    int n;
+    float x;
+};
+
+// mystruct var1={7, 3.14};
+// var1.n=3;
+// mystruct var2=var1;
+
+//mystruct *pt1= &var1;
+// (*p).i; <=> p-> i;
+
+mystruct raz(mystruct *var);   // passage par adresse
+mystruct raz(mystruct &var);   // passage par référence
+
+
+
+
+//------------------- Exercice 14 --------------------
+void truc1(const int& x);
+void truc2(int& x);
+void truc3(const int& x);
+
+
+//------------------- Exercice 15 --------------------
+
+/* Rappel : Valeur par défaut :
+*
+*       Fixés dans la déclaration de la fonction
+*       Derniers de la liste des arguments
+*       Pas forcément des constantes
+*
+*/
+
+struct point {
+    int x;
+    int y;
+    int z;
+};
+
+void init(point* pt, int _x=0, int _y=0, int _z=0);
+
+void essai_init();
+
+//------------------- Exercice 16 --------------------
+
+void essai_alloc();
+
+
+//------------------- Exercice 17 --------------------
+
+/*  Rappel : Tableaux
+ *
+ *      /!\ Pas de transmission de tableau par valeur en argument d'une fonction
+ *          MAIS ADRESSE 1er élément (tab ou &tab[0]) = OK
+ *      /!\ Tableau peut être initialisé mais PAS affecté directement (tab1=tab2 interdit)
+ *
+ *      string : tab de char : char str[10] : taille_max de la string : 9+'\0' = 10 char
+ *
+ *
+ *
+ *      Exemple :
+ *
+ *          int tab[]={2,3,4,5};
+ *
+ *          char str[10]="arbre" // arbre = lvalue <=> const char[6]
+ *
+ */
+struct personne {
+    char nom[30];
+    unsigned int age;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

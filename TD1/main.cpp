@@ -23,10 +23,30 @@ int main() {
 
     exercice_surcharge();
 
+    cout << endl;
+
+    cout << "Exercice 12" << endl;
+
+    int f=5;
+    int g=9;
+    inverse(&f, &g);
+    cout << endl;
+
+    inverse(f,g);
+    cout << endl;
 
 
+    cout << "Exercice 13" << endl;
 
+    mystruct st1;
 
+    st1.n=10;
+    st1.x=3.14;
+    raz(&st1);  //passage adresse
+
+    st1.n=10;
+    st1.x=3.14;
+    raz(st1);   //passage par référence
 
 
     return 0;
