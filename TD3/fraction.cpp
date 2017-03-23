@@ -3,6 +3,7 @@
 //
 
 #include "fraction.h"
+#include "FractionException.h"
 #include <iostream>
 
 
@@ -34,8 +35,11 @@ void Fraction::setFraction(int n, int d) {    //accès à la fonction setFractio
     numerateur=n;
 
     if(d==0) {
-        cerr << "erreur : dénominateur nul !!" << endl; //cerr : output erreur
+        //cerr << "erreur : dénominateur nul !!" << endl; //cerr : output erreur
         denominateur=1;
+        //throw "Denominateur nul !!";
+        throw FractionException("Dénominateur Nul !!");
+
     }
     simplification();
 }
@@ -91,7 +95,7 @@ const Fraction Fraction::somme(const Fraction &f1) const //ce const ne modifie p
 }
 
 
-const Fraction Fraction::somme(const Fraction &f1, const Fraction &f2) {
+const Fraction somme(const Fraction &f1, const Fraction &f2) {
     int a=f1.getNumerateur();
     int b=f1.getDenominateur();
 
@@ -123,3 +127,35 @@ const Fraction operator+(const Fraction &f1, const Fraction &f2){
     return Fraction(a*d+c*b,b*d);
 
 }
+
+Fraction &Fraction::operator++() {
+    numerateur+=denominateur;
+    return (*this);
+}
+
+Fraction Fraction::operator++(int) {
+    Fraction temp(*this);
+    numerateur+=denominateur;
+    return temp;
+}
+
+
+std::ostream &operator <<(std::ostream &f, const Fraction &t){
+
+    f<<t.getNumerateur();
+    if(t.getDenominateur() !=1){
+        f<<"/"<<t.getDenominateur();
+    }
+
+    return f;
+
+}
+
+
+
+
+
+
+
+
+

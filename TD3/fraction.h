@@ -6,6 +6,7 @@
 #define TD3_FRACTION_H
 
 #include <iostream>
+#include "FractionException.h"
 
 using namespace std;
 
@@ -33,8 +34,10 @@ namespace MATH
                 std::cout <<"constructeur "<<this <<std::endl;   // "constructeur @
 
                 if(d==0) {
-                    std::cout<< "erreur : dénominateur nul !!"<< std::endl;
+                    //std::cout<< "erreur : dénominateur nul !!"<< std::endl;
                     denominateur=1;
+                    //throw "Denominateur nul !!";
+                    throw FractionException("Dénominateur Nul !!");
                 }
             }
         }
@@ -46,24 +49,39 @@ namespace MATH
 
         const  Fraction somme(const Fraction &f1) const;    //membre : 1 argument, autre argument est implicite
 
+//        Fraction(int n=0,int d=1) : numerateur(n),denominateur(d){
+//            std::cout <<"constructeur nul"<<this<<std::endl;
+//            (if d==0)
+//            {
+//                denominateur=1;
+//                throw FractionException("Denominateur nul !!");
+//            }
+//            simplification();
+//
+//        }
+
         ~Fraction(){
-            std::cout <<"appel destructeur pour objet " << this<<endl;};
+            std::cout <<"appel destructeur pour objet " << this<<endl;}
 
         const Fraction operator+(const Fraction &f1) const;
 
+        Fraction &operator++(); //préfixe
+        Fraction operator++(int); //postfixe
 
 
     private:
 
         void simplification();
 
+    };
         const Fraction somme(const Fraction &f1, const Fraction &f2);   //pas membre : 2 arguments car pas d'arguments implicite
 
         //const Fraction operator+(const Fraction &f1, const Fraction &f2) ;
 
+        std::ostream &operator <<(std::ostream &f, const Fraction &t);  //classe ostream non accessible dans la classe Fraction
 
 
-    };
+
 }
 
 #endif //TD3_FRACTION_H
