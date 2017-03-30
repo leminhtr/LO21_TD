@@ -86,19 +86,58 @@ public:
 };
 
 class NotesManager {
-    Article** articles;
-    unsigned int nbArticles;
-    unsigned int nbMaxArticles;
+    Article** articles; // Tableau contenant l'adresse des articles
+    // -> problème : pas d'allocation dynamique
+
+    unsigned int nbArticles;    // taille actuelle du tableau 'articles'
+    unsigned int nbMaxArticles; // taille du tableau 'articles'
+
     void addArticle(Article* a);
-    string filename;
+    string filename;    //Nom du fichier pour la sauvegarde (non utilisé ici)
 public:
-    NotesManager();
-    Article& getNewArticle(const string& id);
+    NotesManager(); //Constructeur : Crée un nouvel article, le titre et le texte sont initialiement vide
+
+//Q.6
+    // La composition entre NotesManager et Article fait que quand NotesManager est détruit, les articles doivent être détruits !
+    // Le destructeur par défaut généré par le compilateur ne prend pas en charge la libération mémoire alloué dynamiquement.
+    // => Il faut donc définir un destructeur prenant en charge cette opération.
+    ~NotesManager();
+
+    // Le constructeur de recopie/opérateur d'affectation généré par défaut recopie la valeur de chaque attribut.
+    // "articles" étant un pointeur, on aboutirait à une situation où 2 objets NotesManager partagent le même tableau d'articles.
+    // Or, la relation définie entre NotesManager et Article est une composition.
+    // -> Un et un seul objets NotesManager est responsable du cycle de vie d'un Article donné.
+    // Un article ne peut pas être partagé entre plusieurs NotesManager. Il faut donc définir le constructeur par recopie et l'opérateur d'affectation.
+    NotesManager(const NotesManager &m);
+    NotesManager &operator=(const NotesManager &m);
+
+    Article& getNewArticle(const string& id);   // créer un nouvel article/alloue mémoire et délègue la tache de sauvegarde à addArticle
     Article& getArticle(const string& id);
 };
 
 
 ostream & operator<<(ostream &f, const Article &a);
+
+class Tag{
+
+private:
+    string name;
+    const Article *article;
+
+public:
+    Tag(const string & n, const Article & a): name(n), article(&a){
+
+    }
+    const string &getName() const {return name;}
+    const Article & getArticle() const {return *article;}
+
+    // La version par défaut du constructeur par recopie/opérateur d'affectation initialise/affecte chaque attribut de l'objet de destination
+    // depuis la valeur de l'attribut de l'objet source.
+    //Dans le cas d'une duplication, on obtiendra un objet Tag destination qui aura même nom que le Tag source
+    // et pointera sur le même Article.
+    // Cependant, la relation entre Tag et Article est une agrégation. Un article peut être partagé par différents Tag.
+    // Pas besoin de redéfinir l'opérateur d'affectation ou le constructeur par recopie
+};
 
 
 
