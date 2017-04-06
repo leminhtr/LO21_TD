@@ -23,19 +23,33 @@ void creation(){
 
 }
 
-void affichage(){
-	NotesManager &manager= NotesManager::getInstance();
+//void affichage(){
+//	NotesManager &manager= NotesManager::getInstance();
+//
+//	manager.load("tmp.dat");
+//	Article& a1=manager.getArticle("article_1");
+//	Article& a2=manager.getArticle("article_2");
+//	Article& a3=manager.getArticle("article_3");
+//	std::cout<<a1<<"\n";
+//	std::cout<<a2<<"\n";
+//	std::cout<<a3<<"\n";
+//
+//    NotesManager::libererInstance();
+//}
 
-	manager.load("tmp.dat");
-	Article& a1=manager.getArticle("article_1");
-	Article& a2=manager.getArticle("article_2");
-	Article& a3=manager.getArticle("article_3");
-	std::cout<<a1<<"\n";
-	std::cout<<a2<<"\n";
-	std::cout<<a3<<"\n";
+void affichage(){
+
+    NotesManager& m2=NotesManager::getInstance();
+/*...*/
+    for(NotesManager::SearchIterator it= m2.getSearchIterator("prendre");!it.isDone();it.
+            next()){
+        std::cout<<it.current()<<"\n";
+    }
+
 
     NotesManager::libererInstance();
 }
+
 
 int main() {
 	try {

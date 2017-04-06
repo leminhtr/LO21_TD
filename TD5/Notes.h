@@ -1,3 +1,6 @@
+
+
+
 #if !defined(_NOTES_H)
 #define _NOTES_H
 
@@ -24,7 +27,7 @@ class Article {
     string text;
 
     Article(const Article &);
-    Article::operator=(const Article & a);
+    Article & operator=(const Article & a);
 
 public:
     Article(const string& i, const string& ti, const string& te);
@@ -43,7 +46,6 @@ private:
     void addArticle(Article* a);
     string filename;
 
-
     NotesManager();
     ~NotesManager();
     NotesManager(const NotesManager& m);
@@ -55,22 +57,210 @@ private:
 
 public:
 
-//    static NotesManager& getInstance(){ //méthode qui vérifie qu'il n'y ait qu'une seule instance de NotesManager
-//        if(instance==nullptr)   // si l'instance n'existe pas
-//            instance = new NotesManager;    // on crée une instance
-//        return *instance;
-//
-//    }
+    class Iterator{
+        /*
+         *  on appelle next à chaque itération sur currentA
+         *  it.current pointe sur un élément de currentA (référence vers l'article courant)
+         */
+        friend class NotesManager;
+
+        Article **currentA; //tableau de pointeur
+        unsigned int nbRestant;
+
+        Iterator(Article **a, unsigned int nr): currentA(a),nbRestant(nr){}
+
+    public:
+        Iterator(): currentA(nullptr),nbRestant(0){}
+
+        bool isDone() const{    //renvoie vraie si nbRestant=0 <=> fin tu tableau
+            return nbRestant==0;
+        }
+
+        void next(){
+            if(isDone()){
+                throw  NotesException("Error : next on Iterator already done");
+            }
+            else {
+                currentA++;
+                nbRestant--;
+            }
+        }
+
+        Article &current() const{   //écriture possible
+            if(isDone()){
+                throw NotesException("Error : current on Iterator already done !");
+            }
+            else{
+                return **currentA;
+            }
+        }
+    };
+        const Iterator getIterator() {
+        return Iterator(articles, nbArticles);  //Iterator est un constructeur privé de NotesManager::Iterator : problème d'accès
+        // Sol. -> on déclare NotesManager comme friend class de Iterator
+        }
+
+    class ConstIterator{
+        /*
+         *  on appelle next à chaque itération sur currentA
+         *  it.current pointe sur un élément de currentA (référence vers l'article courant)
+         */
+
+
+        friend class NotesManager;
+
+        Article **currentA; //tableau de pointeur
+        unsigned int nbRestant;
+
+        ConstIterator(Article **a, unsigned int nr): currentA(a),nbRestant(nr){}
+
+    public:
+        ConstIterator(): currentA(nullptr),nbRestant(0){}
+
+        bool isDone() const{    //renvoie vraie si nbRestant=0 <=> fin tu tableau
+            return nbRestant==0;
+        }
+
+        void next(){
+            if(isDone()){
+                throw  NotesException("Error : next on Iterator already done");
+            }
+            else {
+                currentA++;
+                nbRestant--;
+            }
+        }
+
+        const Article &current() const{ // en lecture seulement
+            if(isDone()){
+                throw NotesException("Error : current on Iterator already done !");
+            }
+            else{
+                return **currentA;
+            }
+        }
+    };
+
+    ConstIterator getIterator() const{
+        return ConstIterator(articles, nbArticles);  //Iterator est un constructeur privé de NotesManager::Iterator : problème d'accès
+        // Sol. -> on déclare NotesManager comme friend class de Iterator
+    }
+
+    class iterator{
+        Article **current;
+        iterator(Article **a):current(a){}
+
+        friend class NotesManager;
+    public:
+        iterator():current(nullptr){}
+
+        Article &operator*(){
+            return **current;
+        }
+
+        iterator &operator++(){
+            ++current;
+            return *this;
+        }
+
+        bool operator!=(iterator it) const{
+            return current != it.current;
+        }
+
+    };
+
+    iterator begin(){   //1ère case du tableau articles
+        return iterator(articles);
+    }
+    iterator end(){ //case juste après la dernière case du tableau articles (condition boucle for : !=m.end
+        return iterator(articles + nbArticles);
+    }
+
+    class const_iterator{
+        Article **current;
+        const_iterator(Article **a):current(a){}
+
+        friend class NotesManager;
+    public:
+        const_iterator():current(nullptr){}
+
+        const Article &operator*() const {
+            return **current;
+        }
+
+        const_iterator &operator++(){
+            ++current;
+            return *this;
+        }
+
+        bool operator!=(const_iterator it) const{
+            return current != it.current;
+        }
+
+    };
+
+    const_iterator begin() const{   //1ère case du tableau articles
+        return const_iterator(articles);
+    }
+    const_iterator end() const{ //case juste après la dernière case du tableau articles (condition boucle for : !=m.end
+        return const_iterator(articles + nbArticles);
+    }
+
+
+    class SearchIterator{
+        friend class NotesManager;
+        Article ** currentA;
+        unsigned int nbRemain;
+        string tofind;
+
+        // Constructeur privé
+        SearchIterator(Article **a, unsigned int nb, const std::string &tf):
+            currentA(a), nbRemain(nb),tofind(tf){   //initialise
+
+            //méthode find pour accéder à la position de la 1ère sous chaine de caractère 'tofind'
+            while (nbRemain >0 && (*currentA)->getText().find(tofind)==std::string::npos){
+                nbRemain--;
+                currentA++;
+            }
+        }
+
+    public:
+        SearchIterator():currentA(nullptr), nbRemain(0), tofind("")/*initialisation tofind optionel*/{}
+
+        bool isDone() const {return nbRemain==0;};
+
+        void next () {
+            if(isDone()){
+                throw NotesException ("Error : next on iterator which is done");
+            }
+            else
+            {
+                nbRemain--;
+                currentA++;
+                while (nbRemain >0 && (*currentA)->getText().find(tofind)==std::string::npos){
+                    nbRemain--;
+                    currentA++;
+                }
+            }
+        }
+
+        Article& current() const{
+            if(isDone())
+                throw NotesException("Error : indirection on iterator which is done !");
+            else
+            {
+                return **currentA; //renvoie référence vers article courant
+            }
+        }
+
+    };
+
+    SearchIterator getSearchIterator(const std::string &tf) const{
+        return SearchIterator(articles, nbArticles, tf);
+    }
+
     static NotesManager& getInstance();
     static void libererInstance();
-
-//    static void libererInstance(){
-//        if(instance != nullptr) // si l'instance existe
-//            delete instance;    // on la supprime
-//        instance=nullptr;   // réinitialisation à nullptr
-//
-//
-//    }
 
 
     Article& getNewArticle(const string& id);
