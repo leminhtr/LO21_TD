@@ -8,6 +8,11 @@
 #include <QVBoxLayout>  // positionnement vertical
 #include <QHBoxLayout>  // positionnement horizontal
 
+#include "Notes.h"
+#include <QFileDialog>  // boite de dialogue pour ouvrir fichier
+
+
+
 int main(int argc, char *argv[]) {
 
 QApplication app(argc, argv);
@@ -59,13 +64,25 @@ QHBoxLayout ctext;      // widget text1 (label) sera à gauche du widget text (z
 ctext.addWidget(&text1);
 ctext.addWidget(&text);
 
-QVBoxLayout couche;     // On adjoute les widgets verticalement : du haut vers le bas
+QVBoxLayout couche;     // On adjoute les widgets verticalement : du haut vers le bas (3 layout horizontaux)
 couche.addLayout(&cid); // -> 'cid' sera en haut et au dessu de 'ctitre'
 couche.addLayout(&ctitre);
 couche.addLayout(&ctext);
 couche.addWidget(&save);
 
 fenetre.setLayout(&couche);
+
+id.setReadOnly(true);   //id en lecture seule
+QString filename= QFileDialog::getOpenFileName();   //chercher le fichier xml
+NotesManager &m=NotesManager::getManager(); //créer une instance de NotesManager
+m.setFilename(filename); //fixer le nom du fichier dans l'instance NotesManager
+m.load();   //charger le fichier
+
+Article &a=m.getArticle("id:to_read");  //Dans le XML, chercher l'article d'identifiant "id:to_read"
+id.setText(a.getId());   //afficher les différentes valeurs dans la fenêtre
+titre.setText(a.getTitle());
+text.setText(a.getText());
+
 
 
 
