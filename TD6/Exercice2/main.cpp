@@ -72,6 +72,7 @@ couche.addWidget(&save);
 
 fenetre.setLayout(&couche);
 
+// Q.3
 id.setReadOnly(true);   //id en lecture seule
 QString filename= QFileDialog::getOpenFileName();   //chercher le fichier xml
 NotesManager &m=NotesManager::getManager(); //créer une instance de NotesManager
