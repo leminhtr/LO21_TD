@@ -59,6 +59,7 @@ Article& NotesManager::getArticle(const QString& id){
     // sinon il est créé
     Article* a=new Article(id,"","");
     addArticle(a);
+    return *a;
 }
 
 NotesManager::NotesManager():articles(nullptr),nbArticles(0),nbMaxArticles(0),filename(""){}

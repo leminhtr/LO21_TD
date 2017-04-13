@@ -60,7 +60,7 @@ public:
             unsigned int nbRemain;
             Iterator(Article** a, unsigned nb):currentA(a),nbRemain(nb){}
         public:
-            Iterator():nbRemain(0),currentA(nullptr){}
+            Iterator():currentA(nullptr),nbRemain(0){}
             bool isDone() const { return nbRemain==0; }
             void next() {
                 if (isDone())
@@ -84,7 +84,7 @@ public:
             unsigned int nbRemain;
             ConstIterator(Article** a, unsigned nb):currentA(a),nbRemain(nb){}
         public:
-            ConstIterator():nbRemain(0),currentA(0){}
+            ConstIterator():currentA(0),nbRemain(0){}
             bool isDone() const { return nbRemain==0; }
             void next() {
                 if (isDone())
