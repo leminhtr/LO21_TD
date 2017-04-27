@@ -5,6 +5,7 @@
 #ifndef TD1_FONCTION_H
 #define TD1_FONCTION_H
 #include "essai.h"
+//using namespace std;
 
 //Ex.2 q1,2
 //        Une université de technologie,

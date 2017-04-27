@@ -25,7 +25,7 @@
  *
  *          T &p : initialisation avec lvalue de type T : obligatoire
  *          const T &p : Référence const : Conversion implicite réalisée si nécessaire, variable temporaire de type T créee si nécessaire
- *          const int &p=32; : pas forcément d'initialisation avec lvalue : ravalue possible
+ *          const int &p=32; : pas forcément d'initialisation avec lvalue : rvalue possible
  *
  */
 
