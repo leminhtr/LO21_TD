@@ -10,23 +10,54 @@
 
 namespace TIME{
 
+    class Evt{
+        std::string sujet;
+    public:
+        const std::string &getDescription() const {return sujet;}
+        virtual void afficher (std::ostream &f= std::cout)const=0;
+        Evt(const std::string &s):sujet(s){}
+
+        virtual ~Evt();
+    };
+
+    class EvtPj : public Evt {
+    private:
+
+        Date debut;
+        Date fin;
+
+    public:
+
+        EvtPj(const Date& d, const Date &f, const std::string &s):Evt(s),Date(d){std::cout<< "Construction EvtPj :" <<this<<"\n";}   //-> 1 constructeur explicite + 1 constructeur de recopie implicite
+
+        const Date &getDebut() const { return  debut;}
+        const Date &getFin() const { return  fin;}
+
+        virtual void afficher(std::ostream& f= std::cout) const {    // résout le polymorphisme <=> les classes filles ont "leurs propres" méthodes de classe afficher
+
+            f<<"***** Evt ********"<<"\n"<<"Date="<<getDebut()<<" sujet="<<getFin()<<"\n";
+
+        }
+        ~EvtPj(){std::cout <<"Destruction EvtPj :"<<this<<"\n";}
+    };
+
     class Evt1j {
     private:
 
         Date date;
-        std::string sujet;
 
     public:
 
-        Evt1j(const Date& d, const std::string& s):date(d),sujet(s){std::cout<< "Construction Evt1j :" <<this<<"\n";}   //-> 1 constructeur explicite + 1 constructeur de recopie implicite
+        Evt1j(const Date& d, const std::string& s):Evt(s),date(d){std::cout<< "Construction Evt1j :" <<this<<"\n";}   //-> 1 constructeur explicite + 1 constructeur de recopie implicite
 
 
-        const std::string& getDescription() const { return sujet; }
+        const std::string& getDescription() const { return getDescription(); }
         const Date& getDate() const { return date; }
 
-       virtual void afficher(std::ostream& f= std::cout) const {    // résout le polymorphisme <=> les classes filles ont "leurs propres" méthodes de classe afficher
+        virtual void afficher(std::ostream& f= std::cout) const {    // résout le polymorphisme <=> les classes filles ont "leurs propres" méthodes de classe afficher
 
-            f<<"***** Evt ********"<<"\n"<<"Date="<<date<<" sujet="<<sujet<<"\n";
+            f<<"***** Evt ********"<<"\n"<<"Date="<<date<<" sujet="<<getDescription()<<"\n";
+
         }
         virtual ~Evt1j(){std::cout <<"Destruction Evt1j :"<<this<<"\n";}
     };
@@ -40,7 +71,7 @@ namespace TIME{
 
         Evt1jDur(const Date &d, const std::string &s,
                  const Horaire &h, const Duree &dur):
-            Evt1j(d,s), horaire(h), duree(dur){
+                Evt1j(d,s), horaire(h), duree(dur){
             std::cout<<"Construction Evt1jDur :"<<this<<"\n";
 
         }
@@ -71,7 +102,7 @@ namespace TIME{
 //            duree=e.duree;
 
 
-            //return  *this;
+        //return  *this;
 //        }
 
 
@@ -86,8 +117,8 @@ namespace TIME{
     public:
 
         Rdv(const Date &d, const std::string &s,
-        const Horaire &h, const Duree &dur,
-        const std::string &p, const std::string &l):
+            const Horaire &h, const Duree &dur,
+            const std::string &p, const std::string &l):
                 Evt1jDur(d,s,h,dur), personnes(p), lieu(l){
             std::cout<<"Construction Rdv :"<<this<<"\n";
 
@@ -106,12 +137,12 @@ namespace TIME{
     };
 
     std::ostream &operator<<(std::ostream &f,
-                            const TIME::Evt1j& e);
+                             const TIME::Evt1j& e);
 
     // Q.3
     class Agenda {
 
-        Evt1j** evts;
+        Evt** evts; //plus Evt1j mais Evt
         unsigned int nb;
         unsigned int nbMax;
         Agenda(const Agenda &a);

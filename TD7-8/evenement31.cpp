@@ -3,7 +3,7 @@
 using namespace TIME;
 
 std::ostream &operator<<(std::ostream &f,
-                         const TIME::Evt1j& e){
+                         const TIME::Evt& e){
     e.afficher(f);  // e peut être n'importe quel objet de classe Evt1j, Evt1jDur ou Rdv donc 1 fonction suffit et fonctionne.
     return f;
 }
@@ -20,17 +20,17 @@ std::ostream &operator<<(std::ostream &f,
 Agenda & Agenda::operator<<(const Evt1j& e){
 
     if(nb==nbMax){
-        Evt1j** tab=new Evt1j*[nbMax+5];
+        Evt** tab=new Evt*[nbMax+5];
         for(unsigned int i=0;i<nb;i++){
             tab[i]=evts[i];
         }
         nbMax+=5;
         Evt1j** old=evts;
         delete[] old;   // On delete avec old et non evts car toutes les opérations avant sont intègres et donc il est plus facile de debuger les exceptions
-                        // en créant une nouvelle variable juste avant la destruction
+        // en créant une nouvelle variable juste avant la destruction
     }
 
-    evts[nb++]= const_cast<Evt1j*>(&e);
+    evts[nb++]= const_cast<Evt*>(&e);
 
     return *this;
 }
