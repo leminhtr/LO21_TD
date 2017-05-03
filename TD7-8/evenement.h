@@ -96,10 +96,13 @@ namespace TIME{
         const std::string &getPersonnes() const { return  personnes;}
         const std::string &getLieu () const { return lieu;}
         void afficher (std::ostream& f= std::cout) const{
-            Evt1j::afficher(f);
+            Evt1jDur::afficher(f);
             f<<"Personnes="<<personnes<<"\n"
              <<"Lieu"<<lieu<<"\n";
         }
+
+        Rdv(const Rdv & r):Evt1jDur(r),personnes(r.personnes),lieu(r.lieu){}
+
         ~Rdv(){std::cout <<"Destruction Rdv :"<<this<<"\n";}
 
 

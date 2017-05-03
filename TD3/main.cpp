@@ -44,13 +44,15 @@ int main() {
     Fraction f2(1,6);
     Fraction* pf3=new Fraction(1,2);
     cout<<"ouverture d’un bloc\n";
-    Fraction* pf6;
+    Fraction* pf6;  //pas d'appel au constructeur pour pf6
+    cout<<"cou"<<endl;
     {
         Fraction f4(3,8);
         Fraction f5(4,6);
-        pf6=new Fraction(1,3);
+        cout<<"hel"<<endl;
+        pf6=new Fraction(1,3);  // appel au constructeur pour pf6
     }
-    cout<<"fin d’un bloc\n";
+    cout<<"fin d’un bloc\n";    // destruction auto de f4,f5 car local
     cout<<"debut d’une fonction\n";
     Fraction* pf7=myFunction();
     cout<<"fin d’une fonction\n";
@@ -59,7 +61,7 @@ int main() {
     delete pf7;
 
     delete pf3;
-
+    cout<<"fin Q.6"<<endl;
 //Ex.2
 
 //Q.1
@@ -112,25 +114,38 @@ int main() {
      */
 
 try {
-    Fraction f20(6,6);
+    Fraction f20(6,0);
     Fraction f21(7,9);
 }
 
     catch (const char * e){
-        cout << "Exception capturée : "<< e;
+        cout << "Exception capturée : "<< e<<endl;
 
     }
 
 
-catch (FractionException &e){
-    cout << "Exception capturée : "<< e.getInfo();
+catch (FractionException const &e){
+    cout << "Exception capturée z : "<< e.getInfo()<<endl;
 
 }
 
 
 
+Fraction f20(4,5);
+    cout<<f20.getNumerateur()<<endl;
+Fraction f21(2,5);
+    cout<<f21.getNumerateur()<<endl;
 
+    Fraction f22=f20.somme(f21);
+    cout<<f22.getNumerateur()<<endl;
 
+    Fraction f23=f20+3;
+    cout<<f23.getNumerateur()<<endl;
+
+    Fraction f24(5);
+    f24++;
+    cout<<f24.getNumerateur()<<endl;
+    cout<<f24.getDenominateur()<<endl;
 
 
 

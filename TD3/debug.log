@@ -1,0 +1,6 @@
+[0429/000638.635:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Nolarry\Reports\Dump: Le chemin d’accès spécifié est introuvable. (0x3)
+[0429/000638.637:ERROR:registration_protocol_win.cc(83)] TransactNamedPipe: Le canal de communication a été fermé. (0x6D)
+[0429/000638.665:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Nolarry\Reports\Dump: Le chemin d’accès spécifié est introuvable. (0x3)
+[0430/235129.167:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Nolarry\Reports\Dump: Le chemin d’accès spécifié est introuvable. (0x3)
+[0430/235129.176:ERROR:registration_protocol_win.cc(83)] TransactNamedPipe: Le canal de communication a été fermé. (0x6D)
+[0430/235129.217:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Nolarry\Reports\Dump: Le chemin d’accès spécifié est introuvable. (0x3)

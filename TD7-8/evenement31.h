@@ -28,20 +28,22 @@ namespace TIME{
 
     public:
 
-        EvtPj(const Date& d, const Date &f, const std::string &s):Evt(s),Date(d){std::cout<< "Construction EvtPj :" <<this<<"\n";}   //-> 1 constructeur explicite + 1 constructeur de recopie implicite
+        EvtPj(const Date& d, const Date &f, const std::string &s):Evt(s),debut(d),fin(f){
+            //std::cout<< "Construction EvtPj :" <<this<<"\n";
+            // }   //-> 1 constructeur explicite + 1 constructeur de recopie implicite
 
-        const Date &getDebut() const { return  debut;}
-        const Date &getFin() const { return  fin;}
+        const Date& getDebut() const { return debut;}
+        const Date& getFin() const { return fin;}
 
         virtual void afficher(std::ostream& f= std::cout) const {    // résout le polymorphisme <=> les classes filles ont "leurs propres" méthodes de classe afficher
 
-            f<<"***** Evt ********"<<"\n"<<"Date="<<getDebut()<<" sujet="<<getFin()<<"\n";
+            f<<"***** Evt ********"<<"\n"<<"Debut="<<debut<<" fin="<<fin()<<"sujet="<<getDescription()<< "\n";
 
         }
         ~EvtPj(){std::cout <<"Destruction EvtPj :"<<this<<"\n";}
     };
 
-    class Evt1j {
+    class Evt1j :public Evt{
     private:
 
         Date date;
@@ -51,7 +53,7 @@ namespace TIME{
         Evt1j(const Date& d, const std::string& s):Evt(s),date(d){std::cout<< "Construction Evt1j :" <<this<<"\n";}   //-> 1 constructeur explicite + 1 constructeur de recopie implicite
 
 
-        const std::string& getDescription() const { return getDescription(); }
+        //const std::string& getDescription() const { return getDescription(); }
         const Date& getDate() const { return date; }
 
         virtual void afficher(std::ostream& f= std::cout) const {    // résout le polymorphisme <=> les classes filles ont "leurs propres" méthodes de classe afficher
@@ -59,6 +61,7 @@ namespace TIME{
             f<<"***** Evt ********"<<"\n"<<"Date="<<date<<" sujet="<<getDescription()<<"\n";
 
         }
+        // ex30 q2
         virtual ~Evt1j(){std::cout <<"Destruction Evt1j :"<<this<<"\n";}
     };
 
@@ -136,8 +139,7 @@ namespace TIME{
 
     };
 
-    std::ostream &operator<<(std::ostream &f,
-                             const TIME::Evt1j& e);
+    std::ostream &operator<<(std::ostream &f, const TIME::Evt& e);
 
     // Q.3
     class Agenda {
@@ -150,7 +152,7 @@ namespace TIME{
 
     public:
         Agenda():evts(nullptr),nb(0),nbMax(0){}
-        Agenda &operator<<(const Evt1j &e);
+        Agenda &operator<<(const Evt &e);
         void afficher(std::ostream &f=std::cout) const;
         virtual ~Agenda();
 
@@ -158,5 +160,5 @@ namespace TIME{
 
     };
 
-}
+};
 #endif

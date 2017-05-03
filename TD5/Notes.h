@@ -26,7 +26,8 @@ class Article {
     string title;
     string text;
 
-    Article(const Article &);
+    // On met le constructeur de recopie et l'opérateur d'affectation en private pour empêcher la duplication d'article
+    Article(const Article &);   
     Article & operator=(const Article & a);
 
 public:
@@ -96,7 +97,7 @@ public:
         }
     };
         const Iterator getIterator() {
-        return Iterator(articles, nbArticles);  //Iterator est un constructeur privé de NotesManager::Iterator : problème d'accès
+            return Iterator(articles, nbArticles);  //Iterator est un constructeur privé de NotesManager::Iterator : problème d'accès
         // Sol. -> on déclare NotesManager comme friend class de Iterator
         }
 
@@ -142,12 +143,13 @@ public:
     };
 
     ConstIterator getIterator() const{
-        return ConstIterator(articles, nbArticles);  //Iterator est un constructeur privé de NotesManager::Iterator : problème d'accès
+        return ConstIterator(articles, nbArticles);  //ConstIterator est un constructeur privé de NotesManager::Iterator : problème d'accès
         // Sol. -> on déclare NotesManager comme friend class de Iterator
     }
 
     class iterator{
         Article **current;
+
         iterator(Article **a):current(a){}
 
         friend class NotesManager;
@@ -209,6 +211,7 @@ public:
 
     class SearchIterator{
         friend class NotesManager;
+
         Article ** currentA;
         unsigned int nbRemain;
         string tofind;
@@ -218,7 +221,7 @@ public:
             currentA(a), nbRemain(nb),tofind(tf){   //initialise
 
             //méthode find pour accéder à la position de la 1ère sous chaine de caractère 'tofind'
-            while (nbRemain >0 && (*currentA)->getText().find(tofind)==std::string::npos){
+            while (nbRemain >0 && (*currentA)->getText().find(tofind)==std::string::npos ){
                 nbRemain--;
                 currentA++;
             }
@@ -244,7 +247,7 @@ public:
             }
         }
 
-        Article& current() const{
+        Article & current() const{
             if(isDone())
                 throw NotesException("Error : indirection on iterator which is done !");
             else

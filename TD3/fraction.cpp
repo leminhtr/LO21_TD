@@ -128,15 +128,15 @@ const Fraction operator+(const Fraction &f1, const Fraction &f2){
 
 }
 
-Fraction &Fraction::operator++() {
+Fraction &Fraction::operator++() {  //++i préfixe
     numerateur+=denominateur;
     return (*this);
 }
 
-Fraction Fraction::operator++(int) {
-    Fraction temp(*this);
-    numerateur+=denominateur;
-    return temp;
+Fraction Fraction::operator++(int) {    //i++ postfixe
+    Fraction temp(*this);   // créer une copie
+    numerateur+=denominateur;   // modifie l'original
+    return temp;    // renvoie la copie (anciennce valeur originale)
 }
 
 

@@ -22,15 +22,16 @@ namespace MATH
     public :
 
         //Constructeurs
-//        Fraction(); //default
+        // "Le constructeur par défaut est le constructeur qui ne prend aucun argument ou dont les arguments ont une valeur par défaut"
+//        Fraction(); //constructeur par default
 //        Fraction(int n, int d); //constructeur affectation
 //        Fraction(int n);    // constructeur affectation
 
-//        Fraction(int n=0, int d=1){ //default
+//        Fraction(int n=0, int d=1){ // constructeur par default
 //            setFraction(n,d);};
 
         Fraction(int n=0, int d=1) :numerateur(n), denominateur(d){
-            {
+
                 std::cout <<"constructeur "<<this <<std::endl;   // "constructeur @
 
                 if(d==0) {
@@ -39,7 +40,7 @@ namespace MATH
                     //throw "Denominateur nul !!";
                     throw FractionException("Dénominateur Nul !!");
                 }
-            }
+
         }
 
         inline int getNumerateur() const {return numerateur;}  //fonction courte -> inline mieux |||||| const : ne modifie pas l'objet sur laquelle elle est appelée : foo.getNumerateur();

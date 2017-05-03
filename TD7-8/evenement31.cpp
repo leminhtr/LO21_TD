@@ -1,4 +1,6 @@
-#include "evenement.h"
+//#include "evenement.h"
+
+#include "evenement31.h"
 
 using namespace TIME;
 
@@ -17,7 +19,7 @@ std::ostream &operator<<(std::ostream &f,
 
 
 // La classe Agenda n'est pas propriétaire de Evt1J => Donc relation d'agrégation entre Evt1j et Agenda
-Agenda & Agenda::operator<<(const Evt1j& e){
+TIME::Agenda & TIME::Agenda::operator<<(const Evt& e){
 
     if(nb==nbMax){
         Evt** tab=new Evt*[nbMax+5];
@@ -25,7 +27,7 @@ Agenda & Agenda::operator<<(const Evt1j& e){
             tab[i]=evts[i];
         }
         nbMax+=5;
-        Evt1j** old=evts;
+        Evt** old=evts;
         delete[] old;   // On delete avec old et non evts car toutes les opérations avant sont intègres et donc il est plus facile de debuger les exceptions
         // en créant une nouvelle variable juste avant la destruction
     }
