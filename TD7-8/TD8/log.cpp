@@ -29,7 +29,8 @@ using namespace std;
 
 void Mylog::displayLog(std::ostream f) const{
     for(Agenda::iterator it=evts.begin();it!=evts.end();++it){
-        f<<(*it).getDate()<<" - "<< dynamic_cast<const TIME::Evt1jDur &>(*it).getHoraire()<<" : "<<(*it).getDescription()<<endl;
+        const TIME::Evt1jDur &e=dynamic_cast<const TIME::Evt1jDur &>(*it);
+        f<<e.getDate()<<" - "<< dynamic_cast<const TIME::Evt1jDur &>e.getHoraire()<<" : "<<e.getDescription()<<endl;
     }
 
 

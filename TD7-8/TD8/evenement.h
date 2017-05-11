@@ -27,6 +27,14 @@ class Evt {
 
     //Q.3 Template Method
 
+    inline Date getDate(const Evt &e){
+        const Evt1j *pt1= dynamic_cast<const Evt1j*>(&e);
+        const EvtPj *pt2= dynamic_cast<const EvtPj*>(&e);
+        if(pt1!=0) return pt1->getDate();
+        if(pt2!=0) return pt2->getDebut();
+        throw "type evt inattendu";
+    }
+
 
 
 };
@@ -132,6 +140,24 @@ class Evt1jDur : public Evt1j {
     Evt1jDur *clone() const;
 
     string toString() const;
+
+
+    inline bool operator <(const Evt &e1, const Evt & e2){
+        Date d1=getDate(e1);
+        Date d2=getDate(e2);
+
+        if(d1<d2) return true;
+        if(d2<d1) return false;
+        //si d1==d2
+        const Evt1jDur* pt1= dynamic_cast<const Evt1jDur *>(&e1);
+        const Evt1jDur* pt2= dynamic_cast<const Evt1jDur *>(&e2);
+
+        if(pt1==0 && pt2==0) return true;
+        if(pt1!=0 && pt2!=0) return false;
+        //ce sont 2 evt avec un horaire, on les compare
+        return pt1->getDebut()<pt2->getDebut();
+
+    }
 };
 
 class Rdv : public Evt1jDur {

@@ -1,6 +1,7 @@
 #include "evenement.h"
 #include <iostream>
 #include <sstream>
+//sstream : string qui se comporte comme un ostream "une string"<<"suite";
 
 using namespace TIME;
 
