@@ -6875,9 +6875,9 @@
 									"left": 192,
 									"top": 320,
 									"width": 185,
-									"height": 25,
+									"height": 40,
 									"autoResize": false,
-									"text": "while not iter : isDone()",
+									"text": "while not iter : isDone()\nou : while(!iter.isDone())",
 									"wordWrap": true
 								},
 								{
@@ -7575,8 +7575,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 192,
-									"top": 624,
+									"left": 200,
+									"top": 600,
 									"width": 60,
 									"height": 38,
 									"autoResize": false,
