@@ -16,7 +16,7 @@ namespace TD {
         unsigned int cap;
 
     public:
-        Vector(unsigned int s=0, const T& init=T());
+        Vector(unsigned int s=0, const T& init=T());    // T() : constructeur de la classe T
         Vector(const Vector<T> &);  // recopie
         ~Vector();
 
@@ -122,7 +122,6 @@ template<class T> void TD::Vector<T>::pop_back() {
         throw ContenerException("Erreur vector : Vector vide !");
 
 }
-
 
 
 
