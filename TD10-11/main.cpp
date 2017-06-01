@@ -127,9 +127,12 @@ int main() {
     Vector<int>::iterator itd=element_minimum(tab.begin(), tab.end(), comparateur(comparateur::croissant)); // renvoie min
                 // Exemple d'éxecution avec croissant :
                 /*
-                 * 1. comparateur(comparateur::croissant) => "return a<b" et operator() (int a, int b)
-                 * 2. Dans element_min(a, b, COMP) : if(comp(*it1, *it_min)) => comp=[operator() (int a, int b)] avec operator : "return a<b"
-                 * 3. => Donc comparaison min.
+                 * 1. comparateur(comparateur::croissant) => appel au constructeur de la classe comparateur
+                 * 2. Puis, comme appel à la fonction "bool operator(int a, int b)"
+                 * 3. Puis, comme ==croissant alors on fait l'instruction "return a<b" qui compare "en mode inf"
+                 * 4. => Donc comparaison min.
+                 *
+                 * Pareil pour decroissant
                  */
 
     std::cout<< "le max est : "<<*itc<<endl;
