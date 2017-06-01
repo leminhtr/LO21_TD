@@ -4,6 +4,7 @@
 #include "Vector.h"
 #include "Stack.h"
 #include "algorithm.h"
+#include "test2.h"
 
 using namespace std;
 using namespace TD;
@@ -15,10 +16,12 @@ bool inf(int a, int b) {return a<b;}
 bool sup(int a, int b) {return a>b;}
 
 class comparateur {
-private:
-    ordre d;
 public:
     enum ordre{croissant, decroissant};
+private:
+    ordre d;
+
+public:
 
     comparateur(ordre o=croissant) : d(o) {}
     bool operator() (int a, int b) {
@@ -119,7 +122,7 @@ int main() {
 
     std::cout<<endl;
 
-    // Méthode avec Avec CLASS comparateur :
+    // Méthode avec CLASS comparateur :
     Vector<int>::iterator itc=element_minimum(tab.begin(), tab.end(), comparateur(comparateur::decroissant));   // renvoie max
     Vector<int>::iterator itd=element_minimum(tab.begin(), tab.end(), comparateur(comparateur::croissant)); // renvoie min
                 // Exemple d'éxecution avec croissant :
@@ -132,6 +135,16 @@ int main() {
     std::cout<< "le max est : "<<*itc<<endl;
     std::cout<< "le min est : "<<*itd<<endl;
 
+
+    cout<<endl;
+    //Exemple2
+    exemple1<int> var;
+    var.a=100;
+
+    var.test(); // ici la variable globale est affiché
+    var.test();
+
+    cout<<var.a<<endl;  // ici, l'attribut a est affiché
 
 
     return 0;
