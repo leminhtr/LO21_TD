@@ -3,11 +3,33 @@
 #include "conteneur.h"
 #include "Vector.h"
 #include "Stack.h"
+#include "algorithm.h"
 
 using namespace std;
 using namespace TD;
-using namespace AO;
-//using namespace AC;
+//using namespace AO;
+using namespace AC;
+using namespace LO21;
+
+bool inf(int a, int b) {return a<b;}
+bool sup(int a, int b) {return a>b;}
+
+class comparateur {
+private:
+    ordre d;
+public:
+    enum ordre{croissant, decroissant};
+
+    comparateur(ordre o=croissant) : d(o) {}
+    bool operator() (int a, int b) {
+        if(d==croissant)
+            return a<b;
+        else
+            return a>b;
+    }
+
+};
+
 
 
 int main() {
@@ -37,16 +59,80 @@ int main() {
     pile.push(12);
     pile.push(11);
 
-    while(!pile.empty())
-        cout<<"sommet de pile = "<<pile.top()<<endl;
+//    while(!pile.empty())
+//        cout<<"sommet de pile = "<<pile.top()<<endl;
 
     Stack1<int> pile2;
     pile2.push(10);
     pile2.push(12);
     pile2.push(11);
 
-    while(!pile2.empty())
-        cout<<"sommet de pile = "<<pile2.top()<<endl;
+//    while(!pile2.empty())
+//        cout<<"sommet de pile = "<<pile2.top()<<endl;
+
+
+    //**************************** TD11 ********************************
+
+    //Exemple question 1
+
+    Stack1<string, Vector<string> > pile3;
+
+    pile3.push("hello");
+    pile3.push("world");
+    pile3.push("!");
+
+    Stack1<string, Vector<string> >::iterator it=pile3.begin();
+
+    while(it !=pile3.end()){
+        cout << *it<< endl;
+        ++it;
+    }
+
+
+    //Exemple question 2
+    Vector<int> tab(10,1);
+    tab[0]=7;
+    tab[4]=23;
+    tab[6]=-10;
+
+    for (Vector<int>::iterator it= tab.begin(); it!=tab.end(); ++it) {
+        std::cout<< *it<<" "<<endl;
+    }
+
+    Vector<int>::iterator it_min=element_minimum(tab.begin(), tab.end());
+
+    std::cout<<"le min est : "<< *it_min<<endl;
+
+
+    // Exemple question 3
+
+
+
+    Vector<int>::iterator it2=element_minimum(tab.begin(), tab.end());  // element_min normal
+    Vector<int>::iterator ita=element_minimum(tab.begin(), tab.end(), inf); // element_min avec fonction inf
+    Vector<int>::iterator itb=element_minimum(tab.begin(), tab.end(), sup);
+
+    std::cout<< "le min est : "<<*it2<<endl;
+    std::cout<< "le min est : "<<*ita<<endl;
+    std::cout<< "le max est : "<<*itb<<endl;
+
+
+    std::cout<<endl;
+
+    // Méthode avec Avec CLASS comparateur :
+    Vector<int>::iterator itc=element_minimum(tab.begin(), tab.end(), comparateur(comparateur::decroissant));   // renvoie max
+    Vector<int>::iterator itd=element_minimum(tab.begin(), tab.end(), comparateur(comparateur::croissant)); // renvoie min
+                // Exemple d'éxecution avec croissant :
+                /*
+                 * 1. comparateur(comparateur::croissant) => "return a<b" et operator() (int a, int b)
+                 * 2. Dans element_min(a, b, COMP) : if(comp(*it1, *it_min)) => comp=[operator() (int a, int b)] avec operator : "return a<b"
+                 * 3. => Donc comparaison min.
+                 */
+
+    std::cout<< "le max est : "<<*itc<<endl;
+    std::cout<< "le min est : "<<*itd<<endl;
+
+
 
     return 0;
 }

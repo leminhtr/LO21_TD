@@ -33,11 +33,72 @@ namespace TD {
         void push_back(const T& x);
         void pop_back();
 
+
+        // Iterator non constant pour accès en écriture/lecture
+        // Check list : attribut current : pointeur * sur Type à itérer
+        //constructeur public avec val. par défaut
+        // méthodes : operator ++, !=, *
+        // fonction begin/end
+        class iterator {
+            T* current; // attribut pointe vers élément en cours
+
+
+        public:
+            iterator(T* c=0 /* val par défaut*/) : current(c) {}
+
+            iterator & operator++() {current++; return *this;}  // opérator ++ préfixe
+            iterator &operator++(int) {iterator tmp=*this; current++; return tmp;}  // opérator ++ postfixe (on retourne la valeur PUIS on incrémente après)
+
+            // operator ==
+            bool operator==(const iterator &it) const {return current==it.current;}
+            //operator !=
+            bool operator !=(const iterator &it) const {return current !=it.current;}
+
+            //operator d'indirection : déférencement (*it)
+            T &operator*() const{ return *current;}
+
+        };// fin iterator
+
+        iterator begin() {return iterator(tab);}
+        iterator end() {return iterator(tab+this->nbEl);}
+
+
+        // Iterator constant pour accès en écriture/lecture
+        // Check list : attribut current : pointeur * sur Type à itérer
+        //constructeur public avec val. par défaut
+        // méthodes : operator ++, !=, *
+        // fonction begin/end
+        class const_iterator {
+            T* current; // attribut pointe vers élément en cours
+
+
+        public:
+            const_iterator(T* c=0 /* val par défaut*/) : current(c) {}
+
+            const_iterator & operator++() {current++; return *this;}  // opérator ++ préfixe
+            const_iterator &operator++(int) {const_iterator tmp=*this; current++; return tmp;}  // opérator ++ postfixe (on retourne la valeur PUIS on incrémente après)
+
+            // operator ==
+            bool operator==(const const_iterator &it) const {return current==it.current;}
+            //operator !=
+            bool operator !=(const const_iterator &it) const {return current !=it.current;}
+
+            //operator d'indirection : déférencement (*it)
+            const T &operator*() const{ return *current;}
+
+        };// fin iterator
+
+        const_iterator begin() const {return const_iterator(tab);}
+        const_iterator end() const {return const_iterator(tab+this->nbEl);}
+
+    };
+
+
     };
 
 
 
-}
+
 
 template<class T>
 TD::Vector<T>::Vector(unsigned int s, const T& init) :
@@ -64,7 +125,9 @@ TD::Vector<T>::~Vector() {
 }
 
 template<class T> T& TD::Vector<T>::element(unsigned int i){
-    if(i< Contener<T>::nbEl) // ou Contener<T>::nbEl ou this.nbEl
+    if(i< Contener<T>::nbEl) // ou this->nbEl ou using Contener<T>::nbEl. On préfère utiliser this
+        // !!!!! il faut spécifier l'opérateur de résolution pour utiliser nbEl : Contener<t>::nbEl
+        // voir p.80 ou 84 ? diapo 14
         return tab[i];
     //else
     throw ContenerException("erreur Vector : demande hors limite");
