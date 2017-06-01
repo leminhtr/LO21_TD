@@ -43,6 +43,7 @@ template<class IT, class COMP>IT LO21::element_minimum(IT it1, IT it2, COMP comp
     while(it1!= it2){
         if(comp(*it1, *it_min)) // comp est une fonction dynamique : < ou <= ou ou > ou >=
                                 // on compare donc *it1 et /it2 avec une fonction donnée en argument
+            //comp() appel le constructeur de la classe comparateur (voir main) qui effectue la comparaison return a<b ou a>b
             it_min=it1;
 
         ++it1;

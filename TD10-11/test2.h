@@ -23,6 +23,7 @@ template <class T>
 class exemple1 : public exemple2<T>{
 
 public:
+    //using example2<T>::a;
     void test() {
         std::cout<<"globale : "<<endl;
         std::cout<< a /* Quel "a" est affiché ? : globale ou class attribut exemple2*/<<endl;
