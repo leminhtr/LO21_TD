@@ -58,11 +58,11 @@ const list<unsigned int> &Graph::getSuccessors(unsigned int i) const {
 }
 
 //renvoie la liste des prédécesseurs de j
-const list<unsigned int> Graph::getPredecessors(unsigned int j) const {
+const list<unsigned int> &Graph::getPredecessors(unsigned int j) const {
     if(j>=getNbVertices())
         throw GraphException("Bad argument : vertex is not defined.");
 
-    list < unsigned int > res;
+    list<unsigned int> res;
 
     for (unsigned int i = 0; i < adj.size(); ++i) {
         //parcourir tous les sommets du graphe

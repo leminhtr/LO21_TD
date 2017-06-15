@@ -12,6 +12,7 @@
 #include <c++/list>
 #include <map>
 #include <set>  // ensemble de ...
+#include <algorithm>
 
 using namespace std;
 
@@ -24,12 +25,11 @@ public:
 };
 
 
-
+// ************** Class Graph ***********************
 class Graph {
-    vector<list<unsigned int> > adj;
-    string name;
-    //champ indiquant le nombre d'arcs
-    unsigned int nb_edges;
+    vector<list<unsigned int> > adj;    // adj est un vecteur de liste d'entier <=> tableau de listes d'entiers <=> matrice
+    string name;    //nom du graphe
+    unsigned int nb_edges;     //champ indiquant le nombre d'arcs
 
 
 public:
@@ -41,12 +41,15 @@ public:
     const string& getName() const{ return  name;}
     unsigned int getNbVertices() const {return adj.size();}
     unsigned int getNbEdges() const { return  nb_edges;}
+
     void addEdge(unsigned int i, unsigned int j);
     void removeEdge(unsigned int i, unsigned int j);
     const list<unsigned int>& getSuccessors(unsigned int i) const;
-    const list<unsigned int> getPredecessors(unsigned int j) const;
+    const list<unsigned int> &getPredecessors(unsigned int j) const;
 };
 ostream& operator<<(ostream& f, const Graph& G);
+
+
 
 
 //**************** class GraphG **************************
@@ -71,6 +74,35 @@ public:
     void removeEdge(const Vertex& i, const Vertex& j);
     void removeVertex(const Vertex& i);
     void print(ostream& f) const;
+
+
+    // Q.3
+    class vertex_iterator : public map<Vertex, set <Vertex> >::const_iterator {
+    public:
+
+        vertex_iterator():map<Vertex, set<Vertex> >::const_iterator(){}
+
+        vertex_iterator(typename map<Vertex, set<Vertex> >::const_iterator it):
+            map<Vertex, set<Vertex>>::const_iterator(it){}
+
+        const Vertex& operator*() const {
+            return map<Vertex, set<Vertex> >::const_iterator::operator*().first;
+        }
+    };
+    vertex_iterator begin_vertex() const { return vertex_iterator(adj.begin());}
+    vertex_iterator end_vertex() const { return vertex_iterator(adj.end());}
+
+    class successor_iterator : public set<Vertex>::const_iterator{
+    public:
+        successor_iterator():set <Vertex>::const_iterator(){}
+        successor_iterator(typename set<Vertex>::const_iterator it):
+                set<Vertex>::const_iterator(it){}
+    };
+
+    successor_iterator begin_successor(const Vertex &x) const;
+    successor_iterator end_successor(const Vertex &x) const;
+
+
 };
 template<class V> ostream& operator<<(ostream& f, const GraphG<V>& G);
 
@@ -160,15 +192,62 @@ void GraphG<Vertex>::print(ostream& f) const{
     }
 }
 
-template <class Vertex>
-ostream& operator<<(ostream& f, const GraphG<Vertex>& G){
-    G.print(f);
-    return f;
+//template <class Vertex>
+//ostream& operator<<(ostream& f, const GraphG<Vertex>& G){
+//    G.print(f);
+//    return f;
+//}
+
+
+// **** Q.3
+template <class  Vertex>
+typename GraphG<Vertex>::successor_iterator GraphG<Vertex>::begin_successor(const Vertex &x) const{
+    typename map<Vertex, set<Vertex>>::const_iterator it=adj.find(x);
+
+    if(it!= adj.end())
+        return successor_iterator(it->second.begin());  //accès à second : ensemble des successeurs de first (first=sommet)
+                                    //second.begin() : renvoie addresse 1er successeur de first (1er élément de second)
+    throw GraphException("Bad argument : vertex not defined");
 }
 
+template <class  Vertex>
+typename GraphG<Vertex>::successor_iterator GraphG<Vertex>::end_successor(const Vertex &x) const{
+    typename map<Vertex, set<Vertex>>::const_iterator it=adj.find(x);
 
+    if(it!= adj.end())
+        return successor_iterator(it->second.end());  //accès à second : ensemble des successeurs de first (first=sommet)
+                                    //second.end() : renvoie addresse dernier successeur de first (dernier élément de second)
+    throw GraphException("Bad argument : vertex not defined");
+}
 
+// ** Q.4 : forEach
+template <class V>
+class print{
+    const GraphG<V> &G;
+    ostream &flux;
 
+public:
+    print(ostream &f, const GraphG<V> &g):G(g), flux(f) {}
+    void operator()(const V &x){
+        flux<< x <<":";
+        typename GraphG<V>::successor_iterator it;
+
+        for(it=G.begin_successor(x);it!=G.end_successor(x);++it){
+            flux<<*it<<" ";
+        }
+
+    flux<<endl;
+    }
+};
+
+template <class Vertex>
+ostream& operator<<(ostream& f, const GraphG<Vertex>& G){
+    f<<"Graph "<<G.getName()<<" ("<<G.getNbVertices()<<" vertices and "<<G.getNbEdges()<<" edges) "<<endl;
+
+    std::for_each(G.begin_vertex(), G.end_vertex(), print<Vertex>(f,G));
+
+    return f;
+}
 
 
 
