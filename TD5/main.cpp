@@ -41,8 +41,7 @@ void affichage(){
 
     NotesManager& m2=NotesManager::getInstance();
 /*...*/
-    for(NotesManager::SearchIterator it= m2.getSearchIterator("prendre");!it.isDone();it.
-            next()){
+    for(NotesManager::SearchIterator it= m2.getSearchIterator("prendre");!it.isDone();it.next()){
         std::cout<<it.current()<<"\n";
     }
 
